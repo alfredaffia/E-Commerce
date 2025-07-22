@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body,  UseGuards, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, UseGuards, Patch, Param, Delete } from '@nestjs/common';
 import { CategoriesService } from './categories.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { AuthGuard } from '@nestjs/passport';
@@ -11,12 +11,12 @@ import { UpdateCategoryDto } from './dto/update-category.dto';
 
 @Controller('categories')
 export class CategoriesController {
-  constructor(private readonly categoriesService: CategoriesService) {}
+  constructor(private readonly categoriesService: CategoriesService) { }
 
-  @UseGuards(AuthGuard(),RolesGuard)
+  @UseGuards(AuthGuard(), RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.USER)
   @Post('newcategory')
-  async create(@Body() createCategoryDto: CreateCategoryDto, @CurrentUser() CurrentUser:User ) {
+  async create(@Body() createCategoryDto: CreateCategoryDto, @CurrentUser() CurrentUser: User) {
     return await this.categoriesService.create(createCategoryDto, CurrentUser);
   }
 
@@ -25,22 +25,23 @@ export class CategoriesController {
     return await this.categoriesService.findOne(id);
   }
 
-  @UseGuards(AuthGuard(),RolesGuard)
-  @Roles(UserRole.ADMIN, UserRole.USER)
+  @UseGuards(AuthGuard())
   @Get()
   async findAll() {
     return await this.categoriesService.findAll();
   }
 
-  @UseGuards(AuthGuard())
-  @Patch('update/:id') 
-  async update(@Param('id')id:string, @Body() updateCategoryDto:UpdateCategoryDto){
-return await this.categoriesService.update(id ,updateCategoryDto)
+  @UseGuards(AuthGuard(), RolesGuard)
+  @Roles(UserRole.ADMIN)
+  @Patch('update/:id')
+  async update(@Param('id') id: string, @Body() updateCategoryDto: UpdateCategoryDto) {
+    return await this.categoriesService.update(id, updateCategoryDto)
   }
 
-
+  @UseGuards(AuthGuard(), RolesGuard)
+  @Roles(UserRole.ADMIN)
   @Delete('delete/:id')
-  async delete(@Param('id')id:string){
+  async delete(@Param('id') id: string) {
     return await this.categoriesService.remove(id)
   }
-  }
+}

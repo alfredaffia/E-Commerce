@@ -24,6 +24,8 @@ export class UserController {
     return this.userService.findAll();
   }
 
+    @UseGuards(AuthGuard(),RolesGuard)
+  @Roles(UserRole.ADMIN, )
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.userService.findOneById(id);
@@ -46,6 +48,7 @@ export class UserController {
     return this.userService.unBlockUser(id);
   }
 
+  @UseGuards(AuthGuard())
   @Post('me')
  getProfile(@CurrentUser() currentUser:User) {
     return currentUser
@@ -60,8 +63,7 @@ export class UserController {
   }
 
 
-  @UseGuards(AuthGuard(), RolesGuard)
-  @Roles(UserRole.ADMIN, UserRole.USER)
+  @UseGuards(AuthGuard())
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.userService.remove(id);

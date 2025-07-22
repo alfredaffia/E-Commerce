@@ -34,14 +34,7 @@ export class CategoriesService {
   }
 
   async findAll() {
-    return await this.categoryRepository.find({ relations: ['addedBy'] ,
-        select:{
-    addedBy:{
-      id:true,
-      userName:true,
-      email:true
-    },}
-    })
+    return await this.categoryRepository.find({ relations: ['addedBy']})
   }
 
   async update(id: string, updateCategoryDto: UpdateCategoryDto) {

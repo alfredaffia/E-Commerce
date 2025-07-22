@@ -27,14 +27,13 @@ if (!password) {
       throw new Error('Password is required');
     }
     const hashPassword = await argon2.hash(password)
-    let userDetails = await this.userRepository.create({
+    const userDetails = await this.userRepository.save({
       email,
       password: hashPassword,
       userName,
       ...rest
     })
 
-    // delete userDetails.password
 
     const userPayload = {
       id: userDetails.id,
