@@ -1,33 +1,38 @@
-import{Column, Entity, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
-import { UserRole } from '../../auth/enum/user.role.enum';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { UserRole } from '../../utility/enum/user.role.enum';
 import { Category } from 'src/categories/entities/category.entity';
+import { Exclude } from 'class-transformer';
+import { Product } from 'src/products/entities/product.entity';
 
 @Entity()
 export class User {
     @PrimaryGeneratedColumn('uuid')
-    id:string;
+    id: string;
 
     @Column()
-    userName:string;
+    userName: string;
 
     @Column()
-    email:string;
+    email: string;
 
     @Column()
-    password:string;
+    password: string;
 
     @Column({
-        type:'enum',
-        enum:UserRole,
-        default:UserRole.USER
+        type: 'enum',
+        enum: UserRole,
+        default: UserRole.USER
     })
-    role:UserRole;
+    role: UserRole;
 
     @Column({
-        default:false
+        default: false
     })
-    isBlocked:boolean;
+    isBlocked: boolean;
 
-    @OneToMany(()=>Category,(category)=>category.addedBy)
-    categories:Category[];
+    @OneToMany(() => Category, (category) => category.addedBy)
+    categories: Category[];
+
+    @OneToMany(() => Product, (prod) => prod.addedBy)
+    products: Product[];
 }

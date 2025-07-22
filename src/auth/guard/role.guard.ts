@@ -1,7 +1,7 @@
 import { CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
 import { UserService } from "../../user/user.service";
-import { ForbiddenRoleException } from "../exception/role.exception";
+import { ForbiddenRoleException } from "../../utility/exception/role.exception";
 import { AuthService } from "../auth.service";
 
 

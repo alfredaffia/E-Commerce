@@ -3,10 +3,9 @@ import { UserModule } from './user/user.module';
 import { ConfigModule, } from '@nestjs/config';
 import { DatabaseModule } from './db/database.module';
 import { AuthModule } from './auth/auth.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './user/entities/user.entity';
 import { CategoriesModule } from './categories/categories.module';
 import { CurrentUserMiddleware } from './utility/middleware/current-user.middleware';
+import { ProductsModule } from './products/products.module';
 
 @Module({
   imports: [
@@ -15,6 +14,7 @@ import { CurrentUserMiddleware } from './utility/middleware/current-user.middlew
     AuthModule,
     UserModule,
         CategoriesModule,
+        ProductsModule,
     ],
     
   controllers: [],

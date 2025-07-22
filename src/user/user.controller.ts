@@ -4,7 +4,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { Roles } from 'src/utility/decorators/role';
 import { RolesGuard } from 'src/auth/guard/role.guard';
-import { UserRole } from '../auth/enum/user.role.enum';
+import { UserRole } from '../utility/enum/user.role.enum';
 import { CurrentUser } from 'src/utility/decorators/current-user.decorator';
 import { User } from './entities/user.entity';
 

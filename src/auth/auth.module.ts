@@ -27,8 +27,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       },
     }),
 forwardRef(() => UserModule),
-
-
   ],
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy],

@@ -30,10 +30,21 @@ export class CurrentUserMiddleware implements NestMiddleware {
             if (!jwtSecret) {
                 throw new Error('JWT_SECRET is not defined');
             }
+            try{
             const { id } = <jwtPayload>verify(token, jwtSecret)
             const currentUser = await this.userService.findOneById(id);
             req.currentUser=currentUser
             next();
+            } 
+            catch (error) {
+        if (error.name === 'TokenExpiredError') {
+            req.currentUser = undefined;
+            return res.status(401).json({ message: 'Token expired' });
+        }
+        // Handle other JWT errors
+        req.currentUser = undefined;
+        return res.status(401).json({ message: 'Invalid token' });
+    }
         }
 
     }
