@@ -10,6 +10,7 @@ declare global {
     namespace Express {
         interface Request {
             currentUser?: User
+
         }
     }
 }
@@ -33,6 +34,7 @@ export class CurrentUserMiddleware implements NestMiddleware {
             try{
             const { id } = <jwtPayload>verify(token, jwtSecret)
             const currentUser = await this.userService.findOneById(id);
+      
             req.currentUser=currentUser
             next();
             } 

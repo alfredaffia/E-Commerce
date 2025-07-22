@@ -3,7 +3,7 @@ import { IsNotEmpty, IsString } from "class-validator";
 export class CreateCategoryDto {
 
     @IsString()
-    @IsNotEmpty({message:''})
+    @IsNotEmpty({message:'title must have a value'})
     title: string;
 
     @IsString()

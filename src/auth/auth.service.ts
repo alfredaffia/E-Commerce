@@ -23,7 +23,9 @@ export class AuthService {
     if (user) {
       throw new ConflictException('user alredy exists')
     }
-
+if (!password) {
+      throw new Error('Password is required');
+    }
     const hashPassword = await argon2.hash(password)
     let userDetails = await this.userRepository.create({
       email,
@@ -34,21 +36,16 @@ export class AuthService {
 
     // delete userDetails.password
 
-
-
-    const { password: hashedPassword, ...userWithoutPassword } = userDetails
-    userDetails = await this.userRepository.save(userDetails)
     const userPayload = {
-      id: userWithoutPassword.id,
-      email: userWithoutPassword.email,
-      userName: userWithoutPassword.userName,
-      role: userWithoutPassword.role,
-      isBlocked: userWithoutPassword.isBlocked
+      id: userDetails.id,
+      email: userDetails.email,
+      userName: userDetails.userName,
+      role: userDetails.role
     }
     return {
-      userId: userWithoutPassword.id,
-      userName: userWithoutPassword.userName,
-      userEmail: userWithoutPassword.email,
+      userId: userDetails.id,
+      userName: userDetails.userName,
+      userEmail: userDetails.email,
       access_token: await this.jwtService.signAsync(userPayload),
     }
   }
@@ -70,6 +67,9 @@ export class AuthService {
 
     if (!user) {
       throw new HttpException('No email found', 400)
+    }
+    if (!user.password) {
+      throw new HttpException('User password not found', 400);
     }
     const checkedPassword = await this.verifyPassword(user.password, password);
     if (!checkedPassword) {

@@ -12,8 +12,7 @@ export class CreateUserDto {
     @IsNotEmpty({message:'input username'})
     userName:string;
 
-    @IsOptional()
-    // @IsNotEmpty()
+ @IsNotEmpty({ message: 'Password is required' })
     @IsString()
     @IsStrongPassword({ minLength: 6, minUppercase: 1, minNumbers: 1, minSymbols: 0, minLowercase: 1 })
     password: string;
