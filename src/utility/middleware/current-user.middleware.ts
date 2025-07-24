@@ -3,8 +3,8 @@ import { Injectable, NestMiddleware } from '@nestjs/common';
 import { isArray } from 'class-validator';
 import { Request, Response, NextFunction } from 'express';
 import { verify } from 'jsonwebtoken';
-import { User } from 'src/user/entities/user.entity';
-import { UserService } from 'src/user/user.service';
+import { User } from '../../user/entities/user.entity';
+import { UserService } from '../../user/user.service';
 
 declare global {
     namespace Express {

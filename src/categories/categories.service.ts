@@ -3,8 +3,9 @@ import { CreateCategoryDto } from './dto/create-category.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Category } from './entities/category.entity';
 import { Repository } from 'typeorm';
-import { User } from 'src/user/entities/user.entity';
+import { User } from '../user/entities/user.entity';
 import { UpdateCategoryDto } from './dto/update-category.dto';
+import { title } from 'process';
 
 @Injectable()
 export class CategoriesService {
@@ -37,13 +38,20 @@ export class CategoriesService {
     return await this.categoryRepository.find({ relations: ['addedBy']})
   }
 
-  async update(id: string, updateCategoryDto: UpdateCategoryDto) {
+  async update(id: string, updateCategoryDto: UpdateCategoryDto,currentUser:User) {
     const newUpdate = await this.categoryRepository.findOne({ where: { id } })
     if (!newUpdate) {
       throw new NotFoundException('category not found')
     }
+if (updateCategoryDto.title !== newUpdate.title){
+throw new HttpException('title already exists',400)
+}
+if (updateCategoryDto.description !== newUpdate.description){
+throw new HttpException('description already exists',400)
+}
 
     const updatecategory = await this.categoryRepository.update(id, updateCategoryDto)
+
     const updatedCategory = await this.categoryRepository.findOne({ where: { id } })
     return {
       statusCode: 200,

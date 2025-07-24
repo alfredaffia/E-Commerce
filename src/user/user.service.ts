@@ -4,7 +4,7 @@ import { User } from './entities/user.entity';
 import * as argon2 from 'argon2';
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm';
-import { UserRole } from 'src/utility/enum/user.role.enum';
+import { UserRole } from '../utility/enum/user.role.enum';
 
 
 

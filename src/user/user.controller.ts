@@ -2,10 +2,10 @@ import { Controller, Get, Body, Patch, Param, Delete, UseGuards, Post, Req } fro
 import { UserService } from './user.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { AuthGuard } from '@nestjs/passport';
-import { Roles } from 'src/utility/decorators/role';
-import { RolesGuard } from 'src/auth/guard/role.guard';
+import { Roles } from '../utility/decorators/role';
+import { RolesGuard } from '../auth/guard/role.guard';
 import { UserRole } from '../utility/enum/user.role.enum';
-import { CurrentUser } from 'src/utility/decorators/current-user.decorator';
+import { CurrentUser } from '../utility/decorators/current-user.decorator';
 import { User } from './entities/user.entity';
 
 @Controller('user')
@@ -17,15 +17,15 @@ export class UserController {
     return await this.userService.seedDefaultAdmins();
   }
 
-  @UseGuards(AuthGuard(),RolesGuard)
-  @Roles(UserRole.ADMIN, ) 
+  @UseGuards(AuthGuard(), RolesGuard)
+  @Roles(UserRole.ADMIN,)
   @Get()
   findAll() {
     return this.userService.findAll();
   }
 
-    @UseGuards(AuthGuard(),RolesGuard)
-  @Roles(UserRole.ADMIN, )
+  @UseGuards(AuthGuard(), RolesGuard)
+  @Roles(UserRole.ADMIN,)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.userService.findOneById(id);
@@ -50,14 +50,14 @@ export class UserController {
 
   @UseGuards(AuthGuard())
   @Post('me')
- getProfile(@CurrentUser() currentUser:User) {
+  getProfile(@CurrentUser() currentUser: User) {
     return currentUser
   }
 
-  @Patch(':id') 
+  @Patch(':id')
   async update(
-    @Param('id') userId: string, 
-    @Body() updateUserDto: UpdateUserDto, 
+    @Param('id') userId: string,
+    @Body() updateUserDto: UpdateUserDto,
   ) {
     return this.userService.update(userId, updateUserDto); // Removed currentUserId argument
   }

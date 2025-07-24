@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { CategoriesModule } from './categories/categories.module';
 import { CurrentUserMiddleware } from './utility/middleware/current-user.middleware';
 import { ProductsModule } from './products/products.module';
+import { ReviewsModule } from './reviews/reviews.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { ProductsModule } from './products/products.module';
     UserModule,
         CategoriesModule,
         ProductsModule,
+        ReviewsModule,
     ],
     
   controllers: [],

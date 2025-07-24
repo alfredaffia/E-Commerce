@@ -1,8 +1,8 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { UserRole } from '../../utility/enum/user.role.enum';
-import { Category } from 'src/categories/entities/category.entity';
-import { Exclude } from 'class-transformer';
-import { Product } from 'src/products/entities/product.entity';
+import { Category } from '../../categories/entities/category.entity';
+import { Product } from '../../products/entities/product.entity';
+import { Review } from 'src/reviews/entities/review.entity';
 
 @Entity()
 export class User {
@@ -37,4 +37,7 @@ export class User {
 
     @OneToMany(() => Product, (prod) => prod.addedBy)
     products: Product[];
+
+    @OneToMany(()=> Review,(review)=>review.user)
+    reviews:Review[];
 }
